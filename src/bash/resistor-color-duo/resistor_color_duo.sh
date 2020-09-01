@@ -1,40 +1,29 @@
 #!/usr/bin/env bash
 
+declare -A mapping
+mapping=(["black"]=0 ["brown"]=1 ["red"]=2 ["orange"]=3 ["yellow"]=4 ["green"]=5 ["blue"]=6 ["violet"]=7 ["grey"]=8 ["white"]=9)
+
+check_value () {
+    if ! [[ -v "mapping[$1]" ]]
+        then
+            echo invalid color
+            exit 1
+        fi
+}
+
 count=1
 result=""
 for i in "$@"
 do
-  case $i in
-      "black" )
-        result=$result"0";;
-      "brown" )
-        result=$result"1";;
-      "red" )
-        result=$result"2";;
-      "orange" )
-        result=$result"3";;
-      "yellow" )
-        result=$result"4";;
-      "green" )
-        result=$result"5";;
-      "blue" )
-        result=$result"6";;
-      "violet" )
-        result=$result"7";;
-      "grey" )
-        result=$result"8";;
-      "white" )
-        result=$result"9";;
-      * )
-        echo invalid color
-        exit 1
-  esac
-
+  check_value $i
+  result=$result${mapping[$i]}
+ 
   if (( $count == 2 ))
     then
       break
   fi
-  count=$count+1
+  
+  ((count++))
 done
 
 echo $result
