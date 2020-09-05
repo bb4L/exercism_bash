@@ -1,27 +1,22 @@
 #!/usr/bin/env bash
 
-declare -A mapping
-mapping=([3]="Pling" [5]="Plang" [7]="Plong")
+set -u
 
-result=""
+declare -r mapping=([3]="Pling" [5]="Plang" [7]="Plong")
+declare result=""
 
 if (( $# != 1 ))
 then
-    echo Needs exactly one argument
+    echo Needs exactly one argument 1>&2
     exit 1
 fi
 
 for i in "${!mapping[@]}"
 do
-    if (( $1 % $i == 0 ))
+    if (( $1 % i == 0 ))
     then
-        result=${mapping[$i]}$result
+        result=$result${mapping[i]}
     fi
 done
 
-if [[ $result == "" ]]
-then
-    result=$1
-fi
-
-echo $result
+[[ $result == "" ]] && echo $1 || echo $result
