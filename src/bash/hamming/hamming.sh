@@ -16,7 +16,7 @@ distance=0
 
 for (( i=0; i<${#1}; i++))
 do
-    if [ ${1:i:1} != ${2:i:1} ]
+    if [[ "${1:i:1}" != "${2:i:1}" ]]
     then
         (( distance++ ))
     fi
