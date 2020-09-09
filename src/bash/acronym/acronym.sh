@@ -3,7 +3,7 @@
 result=""
 replacement=" "
 string=${1^^}
-string=${string/\'/"A"} 
+string=${string/\'/""} 
 string=${string//[^[:alnum:]]/$replacement} 
 
 for word in $string
