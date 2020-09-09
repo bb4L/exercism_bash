@@ -7,17 +7,16 @@ then
     for (( i=0; i<${#1}; i++ ))
     do
         c="${1:i:1}"
-        case $c in
-        A | C | G | T)
-            (( nucleotides["$c"]++ )) ;;
-        *)
+        if [[ ! -v nucleotides[$c] ]]
+        then
             echo "Invalid nucleotide in strand" >&2
-            exit 1 ;;
-        esac
+            exit 1
+        fi
+        (( nucleotides["$c"]++ ))
     done
 fi
 
-for nucleotide in A C G T
+for nucleotide in "${!nucleotides[@]}"
 do
         echo "$nucleotide: ${nucleotides["$nucleotide"]}"
-done
+done | sort
